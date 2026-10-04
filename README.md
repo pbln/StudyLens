@@ -48,14 +48,6 @@ Open the address it prints (usually <http://localhost:5173>). Keep using the sam
 
 The API key is stored in your browser only and is sent only to Google. Don't enter it on a shared computer.
 
-### Try it
-
-1. Click **Open sample** (or **Open PDF** for your own book).
-2. Drag over a few sentences and **right-click**.
-3. Choose **Explain / Study this**. Notes appear in the side panel.
-4. Change **Study structure** in the panel, hit **Run again**, and watch the sections change.
-5. Switch the panel to **Ask doubts** and ask something about the page.
-
 ### Previous-year questions
 
 StudyLens ships with no question data. Import your own JSON file in **Settings → Previous-year questions**:
@@ -90,29 +82,6 @@ GEMINI_API_KEY=your_key node scripts/smoke-gemma.mjs --provider google --model g
 # Is it my key, the model, or Google's server?
 GOOGLE_API_KEY=your_key node scripts/diagnose-google.mjs gemma-4-31b-it
 ```
-
----
-
-## How it works (the short version)
-
-```
-select text → right-click → pick an action
-        │
-        ▼
- Prompt Builder  ← your Study Profile (sections, order, exam, depth, language)
-        │
-        ▼
-     Gemma  (Ollama, Google AI Studio, or the demo stand-in)
-        │   streams text as it is written
-        ▼
- Side panel renders it directly
-```
-
-Three ideas hold the project together:
-
-1. **The prompt is built from data.** A Study Profile is plain JSON. The prompt builder turns "these sections, in this order, for this exam, this deep, in this language" into instructions. Change the profile and the same text produces a different structure.
-2. **The model writes the final format.** Notes come back as Markdown with one `## Heading` per section, and the panel shows it as it streams. There is no JSON-then-convert step. A small checker only *warns* if Gemma ignored your structure. It never rewrites the notes.
-3. **Real questions are retrieved, never generated.** The PYQ action is plain search code. The model isn't involved, so it can't invent an exam question.
 
 ---
 
